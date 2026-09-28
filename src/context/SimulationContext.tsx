@@ -242,7 +242,7 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
 
     const event: SecurityEvent = {
-      id: `SEC_EVT_${Date.now()}`,
+      id: `SEC_EVT_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       timestamp: Date.now(),
       severity: 'CRITICAL',
       type: 'NODE_QUARANTINED',
@@ -284,7 +284,7 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
 
     const event: SecurityEvent = {
-      id: `SEC_EVT_${Date.now()}`,
+      id: `SEC_EVT_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       timestamp: Date.now(),
       severity: 'INFO',
       type: 'NODE_RE_ENROLLED',
@@ -493,7 +493,7 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setAttackLog(prev => [...prev, `[T+1240ms] [LEDGER IMMUTABLE RESULT] ${attackDef.attackSteps.ledgerResult}`]);
 
     const event: SecurityEvent = {
-      id: `SEC_${Date.now()}`,
+      id: `SEC_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
       timestamp: Date.now(),
       severity: attackId === 'device_cloning' || attackId === 'tampering_event' ? 'CRITICAL' : 'WARNING',
       type: attackDef.name.toUpperCase().replace(/\s+/g, '_'),

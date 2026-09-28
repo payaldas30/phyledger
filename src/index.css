@@ -11,6 +11,7 @@
 body {
   font-family: var(--font-sans);
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 code, pre, .font-mono {
@@ -41,7 +42,7 @@ code, pre, .font-mono {
   background-size: 24px 24px;
 }
 
-/* Glassmorphism Panel styles */
+/* Glassmorphism Panel styles (Dark mode default) */
 .glass-panel {
   background: rgba(15, 23, 42, 0.72);
   backdrop-filter: blur(12px);
@@ -127,4 +128,142 @@ code, pre, .font-mono {
 
 .animate-pulse-ring {
   animation: pulse-ring 3s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Comprehensive Light Theme Overrides
+   ========================================================================== */
+html.light, body.light {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light .glass-panel,
+body.light .glass-panel {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(14, 165, 233, 0.28);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+}
+
+html.light .glass-panel-subtle,
+body.light .glass-panel-subtle {
+  background: rgba(248, 250, 252, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  color: #1e293b;
+}
+
+html.light .glass-panel-interactive,
+body.light .glass-panel-interactive {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0f172a;
+}
+
+html.light .glass-panel-interactive:hover,
+body.light .glass-panel-interactive:hover {
+  background: #ffffff;
+  border-color: rgba(14, 165, 233, 0.6);
+  box-shadow: 0 8px 24px -4px rgba(14, 165, 233, 0.15);
+}
+
+html.light .cyber-grid,
+body.light .cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(14, 165, 233, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(14, 165, 233, 0.1) 1px, transparent 1px);
+}
+
+html.light .text-white,
+body.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-300,
+body.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400,
+body.light .text-slate-400 {
+  color: #64748b !important;
+}
+
+html.light .bg-slate-950,
+body.light .bg-slate-950 {
+  background-color: #ffffff !important;
+  color: #0f172a;
+}
+
+html.light .bg-slate-900,
+body.light .bg-slate-900 {
+  background-color: #f1f5f9 !important;
+  color: #0f172a;
+}
+
+html.light .bg-slate-950\/90,
+html.light .bg-slate-950\/80,
+html.light .bg-slate-950\/70,
+html.light .bg-slate-950\/60,
+html.light .bg-slate-950\/40,
+body.light .bg-slate-950\/90,
+body.light .bg-slate-950\/80,
+body.light .bg-slate-950\/70,
+body.light .bg-slate-950\/60,
+body.light .bg-slate-950\/40 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #0f172a;
+}
+
+html.light .bg-slate-900\/90,
+html.light .bg-slate-900\/80,
+html.light .bg-slate-900\/70,
+html.light .bg-slate-900\/60,
+html.light .bg-slate-900\/50,
+html.light .bg-slate-900\/40,
+body.light .bg-slate-900\/90,
+body.light .bg-slate-900\/80,
+body.light .bg-slate-900\/70,
+body.light .bg-slate-900\/60,
+body.light .bg-slate-900\/50,
+body.light .bg-slate-900\/40 {
+  background-color: rgba(241, 245, 249, 0.9) !important;
+  color: #0f172a;
+}
+
+html.light .border-slate-800,
+html.light .border-slate-800\/80,
+html.light .border-slate-800\/60,
+body.light .border-slate-800,
+body.light .border-slate-800\/80,
+body.light .border-slate-800\/60 {
+  border-color: #cbd5e1 !important;
+}
+
+html.light .border-slate-700,
+body.light .border-slate-700 {
+  border-color: #94a3b8 !important;
+}
+
+html.light input,
+html.light select,
+body.light input,
+body.light select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light header,
+body.light header {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(14, 165, 233, 0.3) !important;
+}
+
+html.light footer,
+body.light footer {
+  background-color: rgba(248, 250, 252, 0.95) !important;
+  border-color: #e2e8f0 !important;
 }

@@ -67,6 +67,8 @@ interface SimulationContextType {
   jumpToJudgingStep: (step: number) => void;
   loadScenario: (scenarioName: string) => void;
   resetAll: () => void;
+  resetNotification: string | null;
+  clearResetNotification: () => void;
 }
 
 const SimulationContext = createContext<SimulationContextType | undefined>(undefined);
@@ -78,7 +80,14 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [selectedNodeId, setSelectedNodeId] = useState<string>('D047');
   const [blocks, setBlocks] = useState<Block[]>(() => generateInitialBlocks(generateInitialNodes(100)));
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([]);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try {
+      const saved = localStorage.getItem('phyledger_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+    } catch {}
+    return 'dark';
+  });
+  const [resetNotification, setResetNotification] = useState<string | null>(null);
 
   // Trust Weights & Thresholds
   const [trustWeights, setTrustWeights] = useState<TrustWeights>({
@@ -165,15 +174,23 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }));
   }, [trustWeights, calculateTrustScore]);
 
-  // Update theme class on HTML element
+  // Update theme class on HTML element and localStorage
   useEffect(() => {
     const root = document.documentElement;
+    const body = document.body;
+    try {
+      localStorage.setItem('phyledger_theme', theme);
+    } catch {}
     if (theme === 'dark') {
       root.classList.add('dark');
       root.classList.remove('light');
+      body.classList.add('dark');
+      body.classList.remove('light');
     } else {
       root.classList.remove('dark');
       root.classList.add('light');
+      body.classList.remove('dark');
+      body.classList.add('light');
     }
   }, [theme]);
 
@@ -537,7 +554,7 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     }
   };
 
-  // Reset entire simulator
+  // Reset entire simulator to nominal baseline
   const resetAll = () => {
     const initNodes = generateInitialNodes(activeNodeCount);
     setAllNodes(initNodes);
@@ -549,6 +566,29 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setAttackLog([]);
     setIsJudgingDemoActive(false);
     setJudgingStep(1);
+    setTrustWeights({
+      pufReliability: 0.30,
+      authHealth: 0.20,
+      txBehavior: 0.15,
+      envHealth: 0.15,
+      securityEvents: 0.20,
+    });
+    setTrustThresholds({
+      trusted: 80,
+      watchlist: 50,
+      suspicious: 20,
+    });
+    setConsensusDifficulty(3);
+    setConsensusAlgorithm('CLFSR-SIMULATED');
+
+    setResetNotification('Simulation state successfully refreshed & restored to baseline (100 healthy nodes, clean ledger mempool)');
+    setTimeout(() => {
+      setResetNotification(null);
+    }, 4000);
+  };
+
+  const clearResetNotification = () => {
+    setResetNotification(null);
   };
 
   // Judging Demo actions
@@ -615,6 +655,8 @@ export const SimulationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         jumpToJudgingStep,
         loadScenario,
         resetAll,
+        resetNotification,
+        clearResetNotification,
       }}
     >
       {children}
